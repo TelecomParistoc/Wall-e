@@ -1,4 +1,4 @@
-6 valves                -> 6 GPIO
+4 valves                -> 4 GPIO
 n AX12                  -> 1 UART
 1 IMU                   -> 1 I2C
 4 capteurs de distance  -> 4 GPIO
@@ -9,10 +9,12 @@ n AX12                  -> 1 UART
 4 boutons               -> 4 GPIO
 4 leds                  -> 4 GPIO
 1 SWD                   -> 1 SWD
+1 quartz				-> 2 OSC
 
 ----------------------
-22 GPIO
+20 GPIO
 1 UART
 1 I2C
 6 TIMERS/PWM
 1 SWD
+2 OSC
