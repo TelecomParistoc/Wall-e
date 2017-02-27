@@ -20592,6 +20592,78 @@ Source: AVX .. aphvc.pdf</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="TelecomRobotics">
+<packages>
+<package name="SAMTEC_SHF-105-01-L-D-SM">
+<smd name="P$5" x="-2" y="0" dx="3" dy="0.9144" layer="1"/>
+<smd name="P$3" x="-2" y="1.27" dx="3" dy="0.9144" layer="1"/>
+<smd name="P$1" x="-2" y="2.54" dx="3" dy="0.9144" layer="1"/>
+<smd name="P$7" x="-2" y="-1.27" dx="3" dy="0.9144" layer="1"/>
+<smd name="P$9" x="-2" y="-2.54" dx="3" dy="0.9144" layer="1"/>
+<smd name="P$2" x="2" y="2.54" dx="3" dy="0.9144" layer="1"/>
+<smd name="P$4" x="2" y="1.27" dx="3" dy="0.9144" layer="1"/>
+<smd name="P$6" x="2" y="0" dx="3" dy="0.9144" layer="1"/>
+<smd name="P$8" x="2" y="-1.27" dx="3" dy="0.9144" layer="1"/>
+<smd name="P$10" x="2" y="-2.54" dx="3" dy="0.9144" layer="1"/>
+<wire x1="-2.8" y1="-6.35" x2="2.8" y2="-6.35" width="0.127" layer="21"/>
+<wire x1="2.8" y1="-6.35" x2="2.8" y2="6.35" width="0.127" layer="21"/>
+<wire x1="2.8" y1="6.35" x2="-2.8" y2="6.35" width="0.127" layer="21"/>
+<wire x1="-2.8" y1="6.35" x2="-2.8" y2="1.27" width="0.127" layer="21"/>
+<wire x1="-2.8" y1="-6.35" x2="-2.8" y2="-1.27" width="0.127" layer="21"/>
+</package>
+</packages>
+<symbols>
+<symbol name="SWD/JTAG-10_PINS">
+<pin name="P$6" x="5.08" y="0" visible="off" length="short" rot="R180"/>
+<pin name="P$5" x="-5.08" y="0" visible="off" length="short"/>
+<pin name="P$3" x="-5.08" y="2.54" visible="off" length="short"/>
+<pin name="P$1" x="-5.08" y="5.08" visible="off" length="short"/>
+<pin name="P$9" x="-5.08" y="-5.08" visible="off" length="short"/>
+<pin name="P$8" x="5.08" y="-2.54" visible="off" length="short" rot="R180"/>
+<pin name="P$10" x="5.08" y="-5.08" visible="off" length="short" rot="R180"/>
+<pin name="P$4" x="5.08" y="2.54" visible="off" length="short" rot="R180"/>
+<pin name="P$2" x="5.08" y="5.08" visible="off" length="short" rot="R180"/>
+<wire x1="-3.81" y1="8" x2="3.81" y2="8" width="0.254" layer="94"/>
+<wire x1="3.81" y1="8" x2="3.81" y2="-8" width="0.254" layer="94"/>
+<wire x1="3.81" y1="-8" x2="-3.81" y2="-8" width="0.254" layer="94"/>
+<wire x1="-3.81" y1="-8" x2="-3.81" y2="8" width="0.254" layer="94"/>
+<text x="6.35" y="5.08" size="1.27" layer="94">SWDIO/TMS</text>
+<text x="6.35" y="2.54" size="1.27" layer="94">SWDCLK/TCK</text>
+<text x="6.35" y="0" size="1.27" layer="94">SWO/TDO</text>
+<text x="6.35" y="-2.54" size="1.27" layer="94">NC/TDI</text>
+<text x="6.35" y="-5.08" size="1.27" layer="94">nRESET</text>
+<text x="-6.35" y="5.08" size="1.27" layer="94" align="bottom-right">VCC</text>
+<text x="-6.35" y="2.54" size="1.27" layer="94" align="bottom-right">GND</text>
+<text x="-6.35" y="0" size="1.27" layer="94" align="bottom-right">GND</text>
+<text x="-6.35" y="-5.08" size="1.27" layer="94" align="bottom-right">GNDDetect</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="SWD/JTAG-_PINS">
+<gates>
+<gate name="G$1" symbol="SWD/JTAG-10_PINS" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SAMTEC_SHF-105-01-L-D-SM">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$10" pad="P$10"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+<connect gate="G$1" pin="P$3" pad="P$3"/>
+<connect gate="G$1" pin="P$4" pad="P$4"/>
+<connect gate="G$1" pin="P$5" pad="P$5"/>
+<connect gate="G$1" pin="P$6" pad="P$6"/>
+<connect gate="G$1" pin="P$8" pad="P$8"/>
+<connect gate="G$1" pin="P$9" pad="P$9"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -20702,6 +20774,7 @@ Source: AVX .. aphvc.pdf</description>
 <part name="P+16" library="supply1" deviceset="+12V" device=""/>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
 <part name="P+10" library="supply1" deviceset="+5V" device=""/>
+<part name="U$3" library="TelecomRobotics" deviceset="SWD/JTAG-_PINS" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -20755,6 +20828,7 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="175.26" y1="-25.4" x2="175.26" y2="7.62" width="0.1524" layer="254"/>
 <wire x1="175.26" y1="7.62" x2="121.92" y2="7.62" width="0.1524" layer="254"/>
 <text x="154.94" y="-22.86" size="1.778" layer="254">IMU CONNECTOR</text>
+<text x="78.74" y="-25.4" size="1.778" layer="91">SWD CONNECTOR</text>
 </plain>
 <instances>
 <instance part="U$1" gate="G$1" x="7.62" y="68.58"/>
@@ -20884,6 +20958,7 @@ Source: AVX .. aphvc.pdf</description>
 <instance part="P+16" gate="1" x="309.88" y="170.18"/>
 <instance part="GND10" gate="1" x="134.62" y="45.72"/>
 <instance part="P+10" gate="1" x="-45.72" y="45.72"/>
+<instance part="U$3" gate="G$1" x="60.96" y="-15.24"/>
 </instances>
 <busses>
 </busses>
@@ -21813,12 +21888,32 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="83.82" y1="58.42" x2="86.36" y2="58.42" width="0.1524" layer="91"/>
 <label x="88.9" y="58.42" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$3" gate="G$1" pin="P$2"/>
+<wire x1="66.04" y1="-10.16" x2="78.74" y2="-10.16" width="0.1524" layer="91"/>
+<label x="81.28" y="-10.16" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="SWCLK" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="PA14"/>
 <wire x1="83.82" y1="55.88" x2="86.36" y2="55.88" width="0.1524" layer="91"/>
 <label x="88.9" y="55.88" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SWDCLK" class="0">
+<segment>
+<pinref part="U$3" gate="G$1" pin="P$4"/>
+<wire x1="66.04" y1="-12.7" x2="78.74" y2="-12.7" width="0.1524" layer="91"/>
+<label x="81.28" y="-12.7" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$10" class="0">
+<segment>
+<wire x1="35.56" y1="-2.54" x2="35.56" y2="-27.94" width="0.1524" layer="91"/>
+<wire x1="35.56" y1="-27.94" x2="101.6" y2="-27.94" width="0.1524" layer="91"/>
+<wire x1="101.6" y1="-27.94" x2="101.6" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="101.6" y1="-2.54" x2="35.56" y2="-2.54" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
