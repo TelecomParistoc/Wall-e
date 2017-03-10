@@ -23602,50 +23602,50 @@ Standard 8-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </net>
 <net name="LED1" class="0">
 <segment>
-<pinref part="R4" gate="G$1" pin="1"/>
-<wire x1="142.24" y1="38.1" x2="139.7" y2="38.1" width="0.1524" layer="91"/>
-<label x="132.08" y="38.1" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="U$1" gate="G$1" pin="PB10"/>
-<wire x1="83.82" y1="20.32" x2="86.36" y2="20.32" width="0.1524" layer="91"/>
-<label x="88.9" y="20.32" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="LED2" class="0">
-<segment>
-<pinref part="R2" gate="G$1" pin="1"/>
-<wire x1="142.24" y1="35.56" x2="139.7" y2="35.56" width="0.1524" layer="91"/>
-<label x="132.08" y="35.56" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="U$1" gate="G$1" pin="PB11"/>
 <wire x1="83.82" y1="17.78" x2="86.36" y2="17.78" width="0.1524" layer="91"/>
 <label x="88.9" y="17.78" size="1.778" layer="95"/>
 </segment>
-</net>
-<net name="LED3" class="0">
-<segment>
-<pinref part="R3" gate="G$1" pin="1"/>
-<wire x1="142.24" y1="33.02" x2="139.7" y2="33.02" width="0.1524" layer="91"/>
-<label x="132.08" y="33.02" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="U$1" gate="G$1" pin="PA6"/>
-<wire x1="83.82" y1="76.2" x2="86.36" y2="76.2" width="0.1524" layer="91"/>
-<label x="88.9" y="76.2" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="LED4" class="0">
 <segment>
 <pinref part="R5" gate="G$1" pin="1"/>
 <wire x1="142.24" y1="30.48" x2="139.7" y2="30.48" width="0.1524" layer="91"/>
 <label x="132.08" y="30.48" size="1.778" layer="95"/>
 </segment>
+</net>
+<net name="LED2" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="PA7"/>
 <wire x1="83.82" y1="73.66" x2="86.36" y2="73.66" width="0.1524" layer="91"/>
 <label x="88.9" y="73.66" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R3" gate="G$1" pin="1"/>
+<wire x1="142.24" y1="33.02" x2="139.7" y2="33.02" width="0.1524" layer="91"/>
+<label x="132.08" y="33.02" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LED3" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="PA6"/>
+<wire x1="83.82" y1="76.2" x2="86.36" y2="76.2" width="0.1524" layer="91"/>
+<label x="88.9" y="76.2" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R4" gate="G$1" pin="1"/>
+<wire x1="142.24" y1="38.1" x2="139.7" y2="38.1" width="0.1524" layer="91"/>
+<label x="132.08" y="38.1" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LED4" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="PB10"/>
+<wire x1="83.82" y1="20.32" x2="86.36" y2="20.32" width="0.1524" layer="91"/>
+<label x="88.9" y="20.32" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R2" gate="G$1" pin="1"/>
+<wire x1="142.24" y1="35.56" x2="139.7" y2="35.56" width="0.1524" layer="91"/>
+<label x="132.08" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$8" class="0">
@@ -23732,26 +23732,26 @@ Standard 8-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 </net>
 <net name="SENSOR3" class="0">
 <segment>
-<pinref part="X1" gate="-4" pin="1"/>
-<wire x1="157.48" y1="81.28" x2="154.94" y2="81.28" width="0.1524" layer="91"/>
-<label x="142.24" y="81.28" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="U$1" gate="G$1" pin="PA11"/>
 <wire x1="83.82" y1="63.5" x2="86.36" y2="63.5" width="0.1524" layer="91"/>
 <label x="88.9" y="63.5" size="1.778" layer="95"/>
 </segment>
-</net>
-<net name="SENSOR4" class="0">
 <segment>
 <pinref part="X1" gate="-5" pin="1"/>
 <wire x1="157.48" y1="78.74" x2="154.94" y2="78.74" width="0.1524" layer="91"/>
 <label x="142.24" y="78.74" size="1.778" layer="95"/>
 </segment>
+</net>
+<net name="SENSOR4" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="PA12"/>
 <wire x1="83.82" y1="60.96" x2="86.36" y2="60.96" width="0.1524" layer="91"/>
 <label x="88.9" y="60.96" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="X1" gate="-4" pin="1"/>
+<wire x1="157.48" y1="81.28" x2="154.94" y2="81.28" width="0.1524" layer="91"/>
+<label x="142.24" y="81.28" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$1" class="0">
