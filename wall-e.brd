@@ -23,7 +23,7 @@
 <layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
 <layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
 <layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
@@ -103,6 +103,8 @@
 <hole x="55.5" y="65" drill="3.2"/>
 <hole x="55.5" y="36" drill="3.2"/>
 <hole x="89.18" y="22.54" drill="3.2"/>
+<text x="55.8" y="53.08" size="0.8128" layer="16" font="vector" rot="MR270">Telecom Robotics</text>
+<text x="59.62" y="62.19" size="0.8128" layer="16" font="vector" rot="MR270">WALL-E 2017</text>
 </plain>
 <libraries>
 <library name="con-molex-spox">
