@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.0.2">
+<eagle version="8.1.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -22542,7 +22542,7 @@ Standard 8-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="U$2" library="regul_pth" deviceset="REGUL_PTH" device=""/>
 <part name="R8" library="resistor" deviceset="R-US_" device="R0805" value="360R"/>
 <part name="R9" library="resistor" deviceset="R-US_" device="R0805" value="22K"/>
-<part name="C9" library="resistor" deviceset="CPOL-US" device="E2.5-7" value="220uF"/>
+<part name="C9" library="resistor" deviceset="CPOL-US" device="E3.5-8" value="220uF"/>
 <part name="C10" library="resistor" deviceset="CPOL-US" device="E2.5-7" value="220uF"/>
 <part name="C11" library="resistor" deviceset="C-US" device="C0805" value="100n"/>
 <part name="C12" library="resistor" deviceset="C-US" device="C0805" value="100n"/>
@@ -22596,11 +22596,11 @@ Standard 8-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="P+20" library="supply1" deviceset="+5V" device=""/>
 <part name="LED1" library="led" deviceset="LED" device="CHIP-LED0805"/>
 <part name="GND28" library="supply1" deviceset="GND" device=""/>
-<part name="C3" library="rcl" deviceset="C-EU" device="C0805" value="1uF"/>
+<part name="C3" library="rcl" deviceset="C-EU" device="C0805" value="4.7uF"/>
 <part name="+3V16" library="supply1" deviceset="+3V3" device=""/>
 <part name="C1" library="rcl" deviceset="C-EU" device="C0805" value="10uF"/>
 <part name="C2" library="rcl" deviceset="C-EU" device="C0805" value="10uF"/>
-<part name="C14" library="rcl" deviceset="C-EU" device="C0805" value="10nF"/>
+<part name="C14" library="rcl" deviceset="C-EU" device="C0805" value="100nF"/>
 <part name="JP1" library="SparkFun" deviceset="M08" device="LONGPADS"/>
 <part name="JP2" library="SparkFun" deviceset="M08" device="LONGPADS"/>
 <part name="GND33" library="SparkFun" deviceset="GND" device=""/>
