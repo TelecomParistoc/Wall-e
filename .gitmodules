@@ -2,3 +2,6 @@
 	path = code/ChibiOS
 	url = git@github.com:ChibiOS/ChibiOS.git
 	branch = stable_16.1.x
+[submodule "code/STMdrivers"]
+	path = code/STMdrivers
+	url = git@github.com:TelecomParistoc/STMdrivers.git
