@@ -194,12 +194,11 @@
                                      PIN_PUPDR_PULLUP(GPIOB_PUMP))
 #define VAL_GPIOB_ODR       0x00000000
 #define VAL_GPIOB_AFRL              (PIN_AFIO_AF(GPIOB_IMU_SCL, 4U) |       \
-                                     PIN_AFIO_AF(GPIOB_IMU_SDA, 4U) |
+                                     PIN_AFIO_AF(GPIOB_IMU_SDA, 4U))
 #define VAL_GPIOB_AFRH              (PIN_AFIO_AF(GPIOB_AX12_TX, 7U) |       \
                                      PIN_AFIO_AF(GPIOB_AX12_RX, 7U) |       \
-                                     PIN_AFIO_AF(GPIOB_EYE_1, 1U) |         \
-                                     PIN_AFIO_AF(GPIOB_EYE_2, 1U)
-)
+                                     PIN_AFIO_AF(GPIOB_EYE_1, 1U) |         \
+                                     PIN_AFIO_AF(GPIOB_EYE_2, 1U))
 
 /*
  * GPIOC setup:
