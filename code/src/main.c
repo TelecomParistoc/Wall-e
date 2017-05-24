@@ -1,6 +1,7 @@
 #include "ch.h"
 #include "hal.h"
 #include "motor.h"
+#include "pneumatic.h"
 
 int main(void)
 {
@@ -8,6 +9,7 @@ int main(void)
     chSysInit();
 
     init_motors();
+    pneumatic_init();
 
     while(1) {
         chThdSleepMilliseconds(500);
