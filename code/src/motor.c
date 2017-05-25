@@ -23,3 +23,18 @@ extern void init_motors(void) {
 	TIM15->EGR   = 0x01;      // generate an update event to load the setup values
 TIM15->CR1 = 0x81; // enable counter
 }
+
+extern void set_speed(motor_t motor, int8_t speed) {
+    if (speed <= PWM_MAX / 2) {
+        switch (motor) {
+            case MOTOR_LEFT:
+                TIM15->CCR1 = -speed + PWM_MAX / 2;
+                break;
+            case MOTOR_RIGHT:
+                TIM15->CCR2 = speed + PWM_MAX / 2;
+                break;
+            default:
+                break;
+        }
+    }
+}
