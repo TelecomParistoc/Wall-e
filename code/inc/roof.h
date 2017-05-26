@@ -51,4 +51,7 @@ void set_led_on(led_t id);
  */
 void set_led_off(led_t id);
 
+/* Return TRUE if something is detected */
+bool is_something_detected(void);
+
 #endif /* ROOF_H */
