@@ -122,7 +122,7 @@ CSRC = $(STARTUPSRC) \
        $(BOARDSRC) \
 	   $(RTTSRC) \
 	   $(DRVSRC) \
-       main.c motor.c pneumatic.c roof.c
+       main.c motor.c pneumatic.c roof.c move.c
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
