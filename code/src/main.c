@@ -4,6 +4,7 @@
 #include "pneumatic.h"
 #include "roof.h"
 #include "move.h"
+#include "imudriver.h"
 #include "RTT/SEGGER_RTT.h"
 
 uint32_t time;
@@ -24,6 +25,11 @@ int main(void)
     set_speed(MOTOR_RIGHT, 0);
     set_speed(MOTOR_LEFT, 0);
 
+#if USE_IMU
+    chThdSleepMilliseconds(2000);
+    i2cStart(&I2CD2, &imu_i2c_conf);
+    initIMU(&I2CD2);
+#endif /* USE_IMU */
     time = 0;
     if (read_button(BUTTON_1) == 1) {
         /* Yellow team */
@@ -35,6 +41,7 @@ int main(void)
         sign = -1;
     }
 
+/* Action list */
     move_forward(6000);
     turn(sign * (-90));
     move_forward(3000);
