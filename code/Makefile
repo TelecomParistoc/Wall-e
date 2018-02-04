@@ -122,7 +122,8 @@ CSRC = $(STARTUPSRC) \
        $(BOARDSRC) \
 	   $(RTTSRC) \
 	   $(DRVSRC) \
-       main.c motor.c pneumatic.c roof.c move.c
+       main.c motor.c pneumatic.c roof.c move.c libAX12/src/ax-comm.c \
+	   libAX12/src/ax12driver.c
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
@@ -152,7 +153,8 @@ TCPPSRC =
 ASMSRC = $(STARTUPASM) $(PORTASM) $(OSALASM)
 
 INCDIR = $(STARTUPINC) $(KERNINC) $(PORTINC) $(OSALINC) \
-         $(HALINC) $(PLATFORMINC) $(BOARDINC) $(CHIBIOS)/os/various $(DRVINC) inc
+         $(HALINC) $(PLATFORMINC) $(BOARDINC) $(CHIBIOS)/os/various $(DRVINC)  \
+		 inc libAX12/src
 
 #
 # Project, sources and paths
@@ -203,7 +205,7 @@ CPPWARN = -Wall -Wextra -Wundef
 #
 
 # List all user C define here, like -D_DEBUG=1
-UDEFS =
+UDEFS = -DCHIBIOS=1
 
 # Define ASM defines here
 UADEFS =
