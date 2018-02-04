@@ -6,10 +6,10 @@ static void close_valve(valve_t id);
 
 extern void pneumatic_init(void) {
     stop_pump();
-    open_valve(VALVE_1);
-    open_valve(VALVE_2);
-    open_valve(VALVE_3);
-    open_valve(VALVE_4);
+    close_valve(VALVE_2);
+    close_valve(VALVE_1);
+    close_valve(VALVE_3);
+    close_valve(VALVE_4);
 }
 
 extern void start_pump(void) {
@@ -61,27 +61,27 @@ static void close_valve(valve_t id) {
 extern void extend_arms(void) {
     stop_pump();
 
-    open_valve(VALVE_1);
-    close_valve(VALVE_2);
+    open_valve(VALVE_2);
+    close_valve(VALVE_1);
 
-    close_valve(VALVE_3);
     open_valve(VALVE_4);
+    close_valve(VALVE_3);
 
     start_pump();
-    chThdSleepMilliseconds(1000U);
+    chThdSleepMilliseconds(1500U);
     stop_pump();
 }
 
 extern void retract_arms(void) {
     stop_pump();
 
-    close_valve(VALVE_1);
-    open_valve(VALVE_2);
+    open_valve(VALVE_1);
+    close_valve(VALVE_2);
 
     open_valve(VALVE_3);
     close_valve(VALVE_4);
 
     start_pump();
-    chThdSleepMilliseconds(1000U);
+    chThdSleepMilliseconds(1500U);
     stop_pump();
 }

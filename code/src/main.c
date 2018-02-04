@@ -7,8 +7,6 @@
 #include "imudriver.h"
 #include "RTT/SEGGER_RTT.h"
 
-uint32_t time;
-
 int main(void)
 {
     int sign;
@@ -20,8 +18,6 @@ int main(void)
     init_motors();
     pneumatic_init();
 
-    set_led_on(LED_1);
-
     set_speed(MOTOR_RIGHT, 0);
     set_speed(MOTOR_LEFT, 0);
 
@@ -30,34 +26,28 @@ int main(void)
     i2cStart(&I2CD2, &imu_i2c_conf);
     initIMU(&I2CD2);
 #endif /* USE_IMU */
-    time = 0;
-    if (read_button(BUTTON_1) == 1) {
+
+    if (read_button(BUTTON_1) == 1) { // left button
         /* Yellow team */
         set_led_on(LED_2);
         sign = 1;
     } else {
         /* Blue team */
-        set_led_on(LED_3);
+        set_led_on(LED_1);
         sign = -1;
     }
 
-/* Action list */
-    move_forward(6000);
-    turn(sign * (-90));
-    move_forward(3000);
-    turn(sign * (-90));
-    move_forward(5000);
-    turn(sign * 90);
-    move_forward(2000);
-    turn(sign * 90);
-    move_forward(5000);
-    turn(sign * 90);
-    move_forward(5000);
-    turn (sign * 90);
-    move_forward(4000);
-
+    int count = 0;
     while(1) {
-        chThdSleepMilliseconds(1);
+        count++;
+        chThdSleepMilliseconds(100);
+        if (count == 10) {
+            extend_arms();
+        } else if (count == 40) {
+            retract_arms();
+        } else if (count == 100) {
+            count = 0;
+        }
         palTogglePad(GPIOC, GPIOC_DEBUG_LED);
     }
 
