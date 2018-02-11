@@ -5,6 +5,7 @@
 #include "roof.h"
 #include "move.h"
 #include "imudriver.h"
+#include "ax12driver.h"
 #include "RTT/SEGGER_RTT.h"
 
 int main(void)
@@ -20,6 +21,13 @@ int main(void)
 
     set_speed(MOTOR_RIGHT, 0);
     set_speed(MOTOR_LEFT, 0);
+    SerialConfig conf = {
+        115200,
+        0,
+        0,
+        0
+    };
+    sdStart(&SD3, &conf);
 
 #if USE_IMU
     chThdSleepMilliseconds(2000);
@@ -37,17 +45,9 @@ int main(void)
         sign = -1;
     }
 
-    int count = 0;
     while(1) {
-        count++;
         chThdSleepMilliseconds(100);
-        if (count == 10) {
-            extend_arms();
-        } else if (count == 40) {
-            retract_arms();
-        } else if (count == 100) {
-            count = 0;
-        }
+        AX12setLED(130, 1);
         palTogglePad(GPIOC, GPIOC_DEBUG_LED);
     }
 
