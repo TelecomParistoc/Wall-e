@@ -67,5 +67,5 @@ void set_led_off(led_t id) {
 }
 
 bool is_something_detected(void) {
-    return !palReadPad(GPIOB, GPIOB_EYE_START);
+    return FALSE;
 }

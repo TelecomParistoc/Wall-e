@@ -67,7 +67,7 @@
 #define GPIOB_LED_1                  11U
 #define GPIOB_PUMP                   12U
 #define GPIOB_PIN_13                 13U
-#define GPIOB_EYE_START              14U
+#define GPIOB_EYE_1                  14U
 #define GPIOB_EYE_2                  15U
 
 #define GPIOC_DEBUG_LED              13U
@@ -144,8 +144,8 @@
                                      PIN_PUPDR_PULLUP(GPIOA_SWDIO)    |     \
                                      PIN_PUPDR_PULLDOWN(GPIOA_SWCLK))
 #define VAL_GPIOA_ODR       0x00000000
-#define VAL_GPIOA_AFRL              (PIN_AFIO_AF(GPIOA_MOTOR1_PWM, 9U) |    \
-                                     PIN_AFIO_AF(GPIOA_MOTOR2_PWM, 9U))
+#define VAL_GPIOA_AFRL              (PIN_AFIO_AF(GPIOA_MOTOR1_PWM, 1U) |    \
+                                     PIN_AFIO_AF(GPIOA_MOTOR2_PWM, 1U))
 #define VAL_GPIOA_AFRH              (PIN_AFIO_AF(GPIOA_SWDIO, 0U)   |       \
                                      PIN_AFIO_AF(GPIOA_SWCLK, 0U))
 
@@ -183,7 +183,7 @@
                                      PIN_MODE_OUTPUT(GPIOB_LED_1) |         \
                                      PIN_MODE_OUTPUT(GPIOB_PUMP) |          \
                                      PIN_MODE_INPUT(GPIOB_PIN_13) |         \
-                                     PIN_MODE_INPUT(GPIOB_EYE_START) |  \
+                                     PIN_MODE_ALTERNATE(GPIOB_EYE_1) |  \
                                      PIN_MODE_ALTERNATE(GPIOB_EYE_2))
 #define VAL_GPIOB_OTYPER            (PIN_OTYPE_OPENDRAIN(GPIOB_IMU_SCL) |   \
                                      PIN_OTYPE_OPENDRAIN(GPIOB_IMU_SDA))
@@ -194,12 +194,13 @@
                                      PIN_PUPDR_PULLUP(GPIOB_BUTTON_3)|      \
                                      PIN_PUPDR_PULLUP(GPIOB_LED_4) |        \
                                      PIN_PUPDR_PULLUP(GPIOB_LED_1) |        \
-                                     PIN_PUPDR_PULLUP(GPIOB_PUMP))                                 
+                                     PIN_PUPDR_PULLUP(GPIOB_PUMP))
 #define VAL_GPIOB_ODR       0x00000000
 #define VAL_GPIOB_AFRL              (PIN_AFIO_AF(GPIOB_IMU_SCL, 4U) |       \
                                      PIN_AFIO_AF(GPIOB_IMU_SDA, 4U))
 #define VAL_GPIOB_AFRH              (PIN_AFIO_AF(GPIOB_AX12_TX, 7U) |       \
                                      PIN_AFIO_AF(GPIOB_AX12_RX, 7U) |       \
+                                     PIN_AFIO_AF(GPIOB_EYE_1, 1U)   |       \
                                      PIN_AFIO_AF(GPIOB_EYE_2, 1U))
 
 /*
