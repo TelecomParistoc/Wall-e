@@ -3,7 +3,7 @@
 
 #include "hal.h"
 
-#define USE_IMU 0
+#define USE_IMU 1
 
 void move_forward(uint32_t time);
 

@@ -59,8 +59,8 @@
 #define GPIOB_CODEUSE_2              3U
 #define GPIOB_BUTTON_3               4U
 #define GPIOB_SENSOR_1               5U
-#define GPIOB_IMU_SCL                6U
-#define GPIOB_IMU_SDA                7U
+#define GPIOB_IMU_PROC_TX            6U
+#define GPIOB_IMU_PROC_RX            7U
 #define GPIOB_AX12_TX                8U
 #define GPIOB_AX12_RX                9U
 #define GPIOB_LED_4                  10U
@@ -158,8 +158,8 @@
  * PB3  - CODEUSE_2                 (input floating).
  * PB4  - BUTTON_3                  (input floating).
  * PB5  - SENSOR_1                  (input floating).
- * PB6  - IMU_SCL                   (alternate 4 open drain).
- * PB7  - RPI_SDA                   (alternate 4 open drain).
+ * PB6  - IMU_PROC_TX               (alternate 4).
+ * PB7  - IMU_PROC_RX               (alternate 4).
  * PB8  - AX12_TX                   (alternate 7).
  * PB9  - AX12_RX                   (alternate 7).
  * PB10 - LED_4                     (output push-pull).
@@ -175,8 +175,8 @@
                                      PIN_MODE_INPUT(GPIOB_CODEUSE_2) |      \
                                      PIN_MODE_INPUT(GPIOB_BUTTON_3) |       \
                                      PIN_MODE_INPUT(GPIOB_SENSOR_1) |       \
-                                     PIN_MODE_ALTERNATE(GPIOB_IMU_SCL) |    \
-                                     PIN_MODE_ALTERNATE(GPIOB_IMU_SDA) |    \
+                                     PIN_MODE_ALTERNATE(GPIOB_IMU_PROC_TX) |\
+                                     PIN_MODE_ALTERNATE(GPIOB_IMU_PROC_RX) |\
                                      PIN_MODE_ALTERNATE(GPIOB_AX12_TX) |    \
                                      PIN_MODE_ALTERNATE(GPIOB_AX12_RX) |    \
                                      PIN_MODE_OUTPUT(GPIOB_LED_4) |         \
@@ -185,8 +185,7 @@
                                      PIN_MODE_INPUT(GPIOB_PIN_13) |         \
                                      PIN_MODE_ALTERNATE(GPIOB_EYE_1) |  \
                                      PIN_MODE_ALTERNATE(GPIOB_EYE_2))
-#define VAL_GPIOB_OTYPER            (PIN_OTYPE_OPENDRAIN(GPIOB_IMU_SCL) |   \
-                                     PIN_OTYPE_OPENDRAIN(GPIOB_IMU_SDA))
+#define VAL_GPIOB_OTYPER            0x00000000
 #define VAL_GPIOB_OSPEEDR   0xFFFFFFFF
 #define VAL_GPIOB_PUPDR             (PIN_PUPDR_PULLUP(GPIOB_VALVE_3) |      \
                                      PIN_PUPDR_PULLUP(GPIOB_VALVE_2) |      \
@@ -196,8 +195,8 @@
                                      PIN_PUPDR_PULLUP(GPIOB_LED_1) |        \
                                      PIN_PUPDR_PULLUP(GPIOB_PUMP))
 #define VAL_GPIOB_ODR       0x00000000
-#define VAL_GPIOB_AFRL              (PIN_AFIO_AF(GPIOB_IMU_SCL, 4U) |       \
-                                     PIN_AFIO_AF(GPIOB_IMU_SDA, 4U))
+#define VAL_GPIOB_AFRL              (PIN_AFIO_AF(GPIOB_IMU_PROC_TX, 7U) | \
+                                     PIN_AFIO_AF(GPIOB_IMU_PROC_RX, 7U))
 #define VAL_GPIOB_AFRH              (PIN_AFIO_AF(GPIOB_AX12_TX, 7U) |       \
                                      PIN_AFIO_AF(GPIOB_AX12_RX, 7U) |       \
                                      PIN_AFIO_AF(GPIOB_EYE_1, 1U)   |       \

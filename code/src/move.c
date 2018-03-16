@@ -2,7 +2,7 @@
 #include "roof.h"
 #include "motor.h"
 #if USE_IMU
-#include "imu_driver.h"
+#include "imudriver.h"
 #endif /* USE_IMU */
 #include "RTT/SEGGER_RTT.h"
 
