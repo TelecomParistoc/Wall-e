@@ -205,7 +205,7 @@ CPPWARN = -Wall -Wextra -Wundef
 #
 
 # List all user C define here, like -D_DEBUG=1
-UDEFS = -DCHIBIOS=1
+UDEFS = $(DRIVERDEFS) -DCHIBIOS=1 -DIMU_PROTOCOL=${UART}
 
 # Define ASM defines here
 UADEFS =
