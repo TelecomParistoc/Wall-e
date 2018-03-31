@@ -5,18 +5,35 @@
 #include "imudriver.h"
 #endif /* USE_IMU */
 #include "RTT/SEGGER_RTT.h"
+#include "control.h"
 
 static const int16_t angle_time_factor_right = 25;
 static const int16_t angle_time_factor_left = 30;
 
 #define SIGN(x) ((x > 0) ? 1 : (-1))
 #define ABS(x) ((x > 0) ? x : (-x))
+#define MIN(x, y) ((x) > (y) ? (y) : (x))
 
 #define DEFAULT_SPEED 30
+
+static int8_t limit_interval(int8_t arg, int8_t min, int8_t max) {
+    if (min > max) {
+        return arg;
+    }
+
+    if (arg < min) {
+        return min;
+    } else if (arg > max) {
+        return max;
+    } else {
+        return arg;
+    }
+}
 
 void move_forward(uint32_t time) {
     uint32_t clock = 0;
     bool stopped = TRUE;
+    int8_t linear_speed = DEFAULT_SPEED;
     int8_t motor_right_angle_correction = 0;
     int8_t motor_left_angle_correction = 0;
 #if USE_IMU
@@ -34,17 +51,12 @@ void move_forward(uint32_t time) {
             stopped = TRUE;
         } else if (stopped == TRUE){
 #if USE_IMU
-            angle_error = (getHeading() - initial_angle) % MAX_RANGE;
-            if (angle_error > last_angle_error) {
-                motor_right_angle_correction++;
-                motor_left_angle_correction--;
-            } else if (angle_error < last_angle_error) {
-                motor_right_angle_correction--;
-                motor_left_angle_correction++;
-            }
+            motor_right_angle_correction = command_angular_correction;
+            motor_left_angle_correction = -command_angular_correction;
+            linear_speed = MIN(DEFAULT_SPEED, MAX_SPEED - ABS(command_angular_correction));
 #endif /* USE_IMU */
-            set_speed(MOTOR_LEFT, DEFAULT_SPEED + motor_left_angle_correction);
-            set_speed(MOTOR_RIGHT, DEFAULT_SPEED + motor_right_angle_correction);
+            set_speed(MOTOR_LEFT, limit_interval(linear_speed + motor_left_angle_correction, -MAX_SPEED, MAX_SPEED));
+            set_speed(MOTOR_RIGHT, limit_interval(linear_speed + motor_right_angle_correction, -MAX_SPEED, MAX_SPEED));
             stopped = FALSE;
             clock++;
         } else if (stopped == FALSE) {

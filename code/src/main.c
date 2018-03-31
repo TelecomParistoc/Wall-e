@@ -9,6 +9,7 @@
 #include "imudriver.h"
 #endif /* USE_IMU */
 #include "ax12driver.h"
+#include "control.h"
 #include "RTT/SEGGER_RTT.h"
 
 void cb(void) {
@@ -34,7 +35,7 @@ int main(void)
 
 #if USE_IMU
     chThdSleepMilliseconds(2000);
-    sdStart(&SD1, &imu_serial_conf);
+    sdStart(&SD1, &imu_conf);
     status = initIMU(&SD1);
     printf("initIMU %d\n", status);
 #endif /* USE_IMU */
@@ -64,11 +65,12 @@ int main(void)
         printf("%d\n", AX12move(id, i, cb));
     }*/
 
+    chThdCreateStatic(wa_control, sizeof(wa_control), NORMALPRIO + 1, control_thread, NULL);
+
     while(1) {
         chThdSleepMilliseconds(100);
         palTogglePad(GPIOC, GPIOC_DEBUG_LED);
-//        printf("heading %d\n", getHeading());
-        sdPut(&SD1, 0x55);
+        printf("heading %d\n", getHeading());
     }
 
     return 1;
