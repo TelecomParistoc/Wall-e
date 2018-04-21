@@ -142,7 +142,10 @@
 #define VAL_GPIOA_PUPDR             (PIN_PUPDR_PULLUP(GPIOA_BUTTON_2) |     \
                                      PIN_PUPDR_PULLUP(GPIOA_BUTTON_1) |     \
                                      PIN_PUPDR_PULLUP(GPIOA_SWDIO)    |     \
-                                     PIN_PUPDR_PULLDOWN(GPIOA_SWCLK))
+                                     PIN_PUPDR_PULLDOWN(GPIOA_SWCLK)  |     \
+                                     PIN_PUPDR_PULLUP(GPIOA_SENSOR_2) |     \
+                                     PIN_PUPDR_PULLUP(GPIOA_SENSOR_3) |     \
+                                     PIN_PUPDR_PULLUP(GPIOA_SENSOR_4))
 #define VAL_GPIOA_ODR       0x00000000
 #define VAL_GPIOA_AFRL              (PIN_AFIO_AF(GPIOA_MOTOR1_PWM, 1U) |    \
                                      PIN_AFIO_AF(GPIOA_MOTOR2_PWM, 1U))

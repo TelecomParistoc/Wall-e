@@ -1,9 +1,10 @@
 #include "eyes.h"
 #include "hal.h"
+#include "RTT/SEGGER_RTT.h"
 
-#define PWM_MAX 100
+#define PWM_MAX 1000
 #define CLK_KHZ 72000
-#define PWM_FREQUENCY_KHZ 20
+#define PWM_FREQUENCY_KHZ 0.05
 
 extern void init_eyes(void) {
 
@@ -24,15 +25,55 @@ extern void init_eyes(void) {
 TIM15->CR1 = 0x81; // enable counter
 }
 
+static void ext_cb(EXTDriver* driver, expchannel_t channel);
+
+const EXTConfig ext_config = {
+    {
+        {EXT_CH_MODE_DISABLED, NULL},
+        {EXT_CH_MODE_DISABLED, NULL},
+        {EXT_CH_MODE_DISABLED, NULL},
+        {EXT_CH_MODE_DISABLED, NULL},
+        {EXT_CH_MODE_DISABLED, NULL},
+        {EXT_CH_MODE_DISABLED, NULL},
+        {EXT_CH_MODE_DISABLED, NULL},
+        {EXT_CH_MODE_DISABLED, NULL},
+        {EXT_CH_MODE_DISABLED, NULL},
+        {EXT_CH_MODE_DISABLED, NULL},
+        {EXT_CH_MODE_FALLING_EDGE | EXT_CH_MODE_AUTOSTART | EXT_MODE_GPIOA, ext_cb}, // Coding wheel A
+        {EXT_CH_MODE_FALLING_EDGE | EXT_CH_MODE_AUTOSTART | EXT_MODE_GPIOA, ext_cb}, // Coding wheel B
+        {EXT_CH_MODE_FALLING_EDGE | EXT_CH_MODE_AUTOSTART | EXT_MODE_GPIOA, ext_cb}, // Coding wheel B
+        {EXT_CH_MODE_DISABLED, NULL},
+        {EXT_CH_MODE_DISABLED, NULL},
+        {EXT_CH_MODE_DISABLED, NULL}
+    }
+};
+
 extern void set_pos(eye_t eye, int8_t pos) {
     switch (eye) {
         case EYE_LEFT:
             TIM15->CCR1 = pos;
             break;
         case EYE_RIGHT:
-            TIM15->CCR2 = pos;
+            TIM15->CCR2 = PWM_MAX - pos;
             break;
         default:
             break;
     }
+}
+
+static void ext_cb(EXTDriver* driver, expchannel_t channel) {
+    (void)driver;
+
+    printf("interrupt on channel %d\n", channel);
+}
+
+extern void eyes_up(void) {
+    set_pos(EYE_LEFT, 50);
+    set_pos(EYE_RIGHT, 73);
+}
+
+extern void eyes_down(void) {
+    set_pos(EYE_LEFT, 73);
+    set_pos(EYE_RIGHT, 50);
+
 }
