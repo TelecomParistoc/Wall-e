@@ -28,10 +28,10 @@ extern void set_speed(motor_t motor, int8_t speed) {
     if (speed <= PWM_MAX / 2) {
         switch (motor) {
             case MOTOR_LEFT:
-                pwmEnableChannel(&PWMD2, 2, -speed + PWM_MAX / 2);
+                pwmEnableChannel(&PWMD2, 2, speed + PWM_MAX / 2);
                 break;
             case MOTOR_RIGHT:
-                pwmEnableChannel(&PWMD2, 3, -speed + PWM_MAX / 2);
+                pwmEnableChannel(&PWMD2, 3, speed + PWM_MAX / 2);
                 break;
             default:
                 break;

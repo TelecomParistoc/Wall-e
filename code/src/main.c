@@ -8,7 +8,7 @@
 #if USE_IMU
 #include "imudriver.h"
 #endif /* USE_IMU */
-#include "ax12driver.h"
+#include "arms.h"
 #include "control.h"
 #include "RTT/SEGGER_RTT.h"
 
@@ -28,10 +28,7 @@ int main(void)
     init_motors();
     init_eyes();
     pneumatic_init();
-
-    set_speed(MOTOR_RIGHT, 0);
-    set_speed(MOTOR_LEFT, 0);
-    initAX12(115200);
+    init_arms();
 
 #if USE_IMU
     chThdSleepMilliseconds(2000);
@@ -40,6 +37,9 @@ int main(void)
     printf("initIMU %d\n", status);
 #endif /* USE_IMU */
 
+    /* Start the ChibiOS ext driver */
+    extStart(&EXTD1, &ext_config);
+    //target_distance = 100;
 
     if (read_button(BUTTON_1) == 1) { // left button
         /* Yellow team */
@@ -50,27 +50,12 @@ int main(void)
         set_led_on(LED_1);
         sign = -1;
     }
-    int id = 130;
-    printf("res %d\n", AX12setMode(id, DEFAULT_MODE));
-
-    AX12Config_t ax12Config = {0};
-    ax12Config.id = id;
-/*    if (AX12dump(&ax12Config) == 0) {
-        printf("CW %d, CCW %d\n", ax12Config.CWLimit, ax12Config.CCWLimit);
-    }
-
-    double i;
-    for (i = 0; i < 100; i++) {
-        printf("pos %d (%d)\n", (int)AX12getPosition(id), (int)i);
-        printf("%d\n", AX12move(id, i, cb));
-    }*/
-
     chThdCreateStatic(wa_control, sizeof(wa_control), NORMALPRIO + 1, control_thread, NULL);
-
+    sign = 0;
     while(1) {
         chThdSleepMilliseconds(100);
         palTogglePad(GPIOC, GPIOC_DEBUG_LED);
-        printf("heading %d\n", getHeading());
+        printf("heading %d\n", get_orientation());
     }
 
     return 1;

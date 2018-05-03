@@ -1,6 +1,9 @@
 #include "control.h"
 #include "orientation.h"
 #include "motor.h"
+#include "move.h"
+#include "RTT/SEGGER_RTT.h"
+#include "imudriver.h"
 
 uint16_t target_orientation;
 int32_t target_distance;
@@ -30,26 +33,37 @@ THD_FUNCTION(control_thread, p) {
     int16_t delta_orientation_sum = 0;
     pid_t angular_pid;
     int32_t current_distance;
+    command_angular_correction = 0;
 
     while (TRUE) {
-        chThdSleepMilliseconds(1);
+        chThdSleepMilliseconds(10);
 
         //if obstacle, set speed to 0
 
         // Angular correction
+#if USE_IMU
         cur_orientation = get_orientation();
         if (target_orientation != cur_orientation) {
             delta_orientation = target_orientation - cur_orientation;
+            if (delta_orientation > (MAX_RANGE / 2)) {
+                delta_orientation -= MAX_RANGE;
+            } else if (delta_orientation < (-MAX_RANGE / 2)) {
+                delta_orientation += MAX_RANGE;
+            }
             delta_orientation_sum += delta_orientation;
 
             angular_pid.p = angular_coeff.p * delta_orientation;
             angular_pid.i = angular_coeff.i * delta_orientation_sum;
             angular_pid.d = angular_coeff.d * (delta_orientation - last_delta_orientation);
 
-            command_angular_correction = (uint8_t)(angular_pid.p + angular_pid.i + angular_pid.d);
+            command_angular_correction = (int8_t)(angular_pid.p + angular_pid.i + angular_pid.d);
+            if (ABS(command_angular_correction) > MAX_SPEED) {
+                command_angular_correction = SIGN(command_angular_correction) * MAX_SPEED;
+            }
 
             last_delta_orientation = delta_orientation;
         }
+#endif
 
         // Linear command
         linear_command = 0;

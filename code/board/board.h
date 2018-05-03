@@ -194,6 +194,7 @@
                                      PIN_PUPDR_PULLUP(GPIOB_VALVE_2) |      \
                                      PIN_PUPDR_PULLUP(GPIOB_VALVE_1) |      \
                                      PIN_PUPDR_PULLUP(GPIOB_BUTTON_3)|      \
+                                     PIN_PUPDR_PULLUP(GPIOB_SENSOR_1)|      \
                                      PIN_PUPDR_PULLUP(GPIOB_LED_4) |        \
                                      PIN_PUPDR_PULLUP(GPIOB_LED_1) |        \
                                      PIN_PUPDR_PULLUP(GPIOB_PUMP))

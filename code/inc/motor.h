@@ -3,8 +3,8 @@
 
 #include "hal.h"
 
-#define MAX_SPEED 50
-#define DEFAULT_SPEED 30
+#define MAX_SPEED 30
+#define DEFAULT_SPEED 25
 
 typedef enum motor_t {
     MOTOR_LEFT,

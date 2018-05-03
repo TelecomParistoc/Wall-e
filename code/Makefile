@@ -123,7 +123,7 @@ CSRC = $(STARTUPSRC) \
 	   $(RTTSRC) \
 	   $(DRVSRC) \
        main.c motor.c pneumatic.c roof.c move.c libAX12/src/ax-comm.c \
-	   libAX12/src/ax12driver.c eyes.c orientation.c control.c
+	   libAX12/src/ax12driver.c eyes.c orientation.c control.c arms.c
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
