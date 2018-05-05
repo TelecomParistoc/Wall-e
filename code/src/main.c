@@ -4,7 +4,7 @@
 #include "eyes.h"
 #include "pneumatic.h"
 #include "roof.h"
-#include "move.h"
+#include "orientation.h"
 #if USE_IMU
 #include "imudriver.h"
 #endif /* USE_IMU */
@@ -19,7 +19,6 @@ void cb(void) {
 int main(void)
 {
     int sign;
-    int status;
     halInit();
     chSysInit();
 
@@ -29,6 +28,7 @@ int main(void)
     init_eyes();
     pneumatic_init();
     init_arms();
+    init_control();
 
 #if USE_IMU
     chThdSleepMilliseconds(2000);
@@ -42,11 +42,11 @@ int main(void)
     //target_distance = 100;
 
     if (read_button(BUTTON_1) == 1) { // left button
-        /* Yellow team */
+        /* Orange team */
         set_led_on(LED_2);
         sign = 1;
     } else {
-        /* Blue team */
+        /* Green team */
         set_led_on(LED_1);
         sign = -1;
     }

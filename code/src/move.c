@@ -14,8 +14,6 @@ static const int16_t angle_time_factor_left = 30;
 #define ABS(x) ((x > 0) ? x : (-x))
 #define MIN(x, y) ((x) > (y) ? (y) : (x))
 
-#define DEFAULT_SPEED 30
-
 static int8_t limit_interval(int8_t arg, int8_t min, int8_t max) {
     if (min > max) {
         return arg;
