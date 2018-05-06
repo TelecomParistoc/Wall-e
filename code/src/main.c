@@ -26,11 +26,13 @@ int main(void)
 
     init_motors();
     init_eyes();
+    eyes_up();
     pneumatic_init();
     init_arms();
     init_control();
 
 #if USE_IMU
+    int status;
     chThdSleepMilliseconds(2000);
     sdStart(&SD1, &imu_conf);
     status = initIMU(&SD1);
@@ -39,7 +41,6 @@ int main(void)
 
     /* Start the ChibiOS ext driver */
     extStart(&EXTD1, &ext_config);
-    //target_distance = 100;
 
     if (read_button(BUTTON_1) == 1) { // left button
         /* Orange team */
@@ -52,10 +53,17 @@ int main(void)
     }
     chThdCreateStatic(wa_control, sizeof(wa_control), NORMALPRIO + 1, control_thread, NULL);
     sign = 0;
+    target_distance = 400;
     while(1) {
         chThdSleepMilliseconds(100);
         palTogglePad(GPIOC, GPIOC_DEBUG_LED);
-        printf("heading %d\n", get_orientation());
+        //printf("heading %d pitch %d roll %d\n", get_orientation(), getPitch(), getRoll());
+        sign++;
+        printf("sign %d\n", sign);
+        if (sign == 80) {
+            emergency_stop_enable = false;
+            target_distance = 200;
+        }
     }
 
     return 1;

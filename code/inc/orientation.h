@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define USE_IMU 0
+#define USE_IMU 1
 
 extern uint16_t get_orientation(void);
 

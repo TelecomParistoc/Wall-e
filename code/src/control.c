@@ -18,10 +18,10 @@ typedef struct pid_s {
 } pid_t;
 
 #define SIGN(x) ((x > 0) ? 1 : (-1))
-#define ABS(x) ((x > 0) ? x : (-x))
+#define ABS(x) ((x > 0) ? (x) : (-(x)))
 #define MIN(x, y) ((x) > (y) ? (y) : (x))
 
-pid_t angular_coeff = {1.0, 0.0, 0.0};
+pid_t angular_coeff = {0.2, 0.0, 0.0};
 
 void init_control(void) {
     emergency_stop = false;
@@ -36,7 +36,7 @@ THD_FUNCTION(control_thread, p) {
     (void)p;
 
     uint16_t cur_orientation = 0;
-    uint8_t command_angular_correction = 0;
+    int8_t command_angular_correction = 0;
 #if USE_IMU
     int16_t delta_orientation = 0;
     int16_t last_delta_orientation = 0;
@@ -100,6 +100,7 @@ THD_FUNCTION(control_thread, p) {
 
             linear_command = MIN(DEFAULT_SPEED, MAX_SPEED - ABS(command_angular_correction));
 
+            printf("current_distance %d target_distance %d\n", current_distance, target_distance);
             if (current_distance == target_distance) {
                 target_distance = 0;
                 current_distance = 0;
@@ -107,8 +108,8 @@ THD_FUNCTION(control_thread, p) {
         }
 
         // Set speed
-        set_speed(MOTOR_RIGHT, linear_command + command_angular_correction);
-        set_speed(MOTOR_LEFT, linear_command - command_angular_correction);
+        set_speed(MOTOR_RIGHT, linear_command - command_angular_correction);
+        set_speed(MOTOR_LEFT, linear_command + command_angular_correction);
     }
 
 }
