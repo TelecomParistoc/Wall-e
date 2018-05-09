@@ -18,6 +18,6 @@ extern void eyes_up(void);
 
 extern void eyes_down(void);
 
-extern void check_obstacle(void);
+extern bool check_obstacle(void);
 
 #endif /* EYES_H */

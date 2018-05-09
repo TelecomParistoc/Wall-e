@@ -79,12 +79,14 @@ extern void eyes_down(void) {
     set_pos(EYE_RIGHT, 50);
 }
 
-extern void check_obstacle(void) {
+extern bool check_obstacle(void) {
     if ((palReadPad(GPIOA, GPIOA_SENSOR_2) == PAL_HIGH)
         && (palReadPad(GPIOA, GPIOA_SENSOR_3) == PAL_HIGH)
         && (palReadPad(GPIOA, GPIOA_SENSOR_4) == PAL_HIGH)
         && (palReadPad(GPIOB, GPIOB_SENSOR_1) == PAL_HIGH)) {
         // No obstacle found
-        emergency_stop = false;
+        return false;
+    } else {
+        return true;
     }
 }

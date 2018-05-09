@@ -8,6 +8,7 @@
 uint16_t target_orientation;
 int32_t target_distance;
 uint8_t linear_command;
+static uint16_t cur_orientation = 0;
 volatile bool emergency_stop;
 volatile bool emergency_stop_enable;
 
@@ -24,10 +25,18 @@ typedef struct pid_s {
 pid_t angular_coeff = {0.2, 0.0, 0.0};
 
 void init_control(void) {
-    emergency_stop = false;
+    emergency_stop = true;
     emergency_stop_enable = true;
     target_distance = 0;
     target_orientation = 0;
+}
+
+bool translation_ended(void) {
+    return (target_distance == 0);
+}
+
+bool rotation_ended(void) {
+    return (ABS(target_orientation - cur_orientation) < ANGULAR_ALLOWANCE);
 }
 
 THD_WORKING_AREA(wa_control, 2048);
@@ -35,7 +44,6 @@ THD_WORKING_AREA(wa_control, 2048);
 THD_FUNCTION(control_thread, p) {
     (void)p;
 
-    uint16_t cur_orientation = 0;
     int8_t command_angular_correction = 0;
 #if USE_IMU
     int16_t delta_orientation = 0;
@@ -44,6 +52,7 @@ THD_FUNCTION(control_thread, p) {
     pid_t angular_pid;
 #endif // USE_IMU
     int32_t current_distance = 0;
+    int tmp;
 
     while (TRUE) {
         chThdSleepMilliseconds(10);
@@ -54,7 +63,7 @@ THD_FUNCTION(control_thread, p) {
             set_speed(MOTOR_RIGHT, 0);
             set_speed(MOTOR_LEFT, 0);
 
-            check_obstacle();
+            emergency_stop = check_obstacle();
             continue;
         }
 
@@ -75,9 +84,11 @@ THD_FUNCTION(control_thread, p) {
             angular_pid.i = angular_coeff.i * delta_orientation_sum;
             angular_pid.d = angular_coeff.d * (delta_orientation - last_delta_orientation);
 
-            command_angular_correction = (int8_t)(angular_pid.p + angular_pid.i + angular_pid.d);
-            if (ABS(command_angular_correction) > MAX_SPEED) {
-                command_angular_correction = SIGN(command_angular_correction) * MAX_SPEED;
+            tmp = (int)(angular_pid.p + angular_pid.i + angular_pid.d);
+            if (ABS(tmp) > MAX_SPEED) {
+                command_angular_correction = SIGN(tmp) * MAX_SPEED;
+            } else {
+                command_angular_correction = (int8_t)tmp;
             }
 
             last_delta_orientation = delta_orientation;
