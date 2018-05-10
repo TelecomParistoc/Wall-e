@@ -30,3 +30,16 @@ void set_arms_up(void) {
     AX12move(ID_LEFT, -120, NULL);
     AX12move(ID_RIGHT, 35, NULL);
 }
+
+void set_arms(arms_position_t position) {
+    switch(position) {
+    case ARMS_DOWN:
+        set_arms_down();
+        break;
+    case ARMS_UP:
+        set_arms_up();
+        break;
+    default:
+        break;
+    }
+}

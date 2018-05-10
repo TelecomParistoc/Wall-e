@@ -25,41 +25,84 @@ typedef enum {
 color_t color;
 
 static virtual_timer_t cmd_clock;
+static volatile arms_position_t arms_position = ARMS_NONE;
 
-static void cmd_cb4(void *arg) {
-    target_distance = 700;
+static void cmd_cb10(void *arg) {
+    (void)arg;
+    emergency_stop_enable = false;
+    target_distance = 300;
 }
 
-static void cmd_cb3(void *arg) {
+static void cmd_cb9(void *arg) {
+    (void)arg;
     if (color == GREEN) {
         target_orientation = DEGREE_TO_IMU_UNIT(270);
     } else {
         target_orientation = DEGREE_TO_IMU_UNIT(90);
     }
-    chSysLockFromISR();
-    chVTResetI(&cmd_clock);
-    chVTSetI(&cmd_clock, S2ST(3), cmd_cb4, NULL);
-    chSysUnlockFromISR();
+    NEXT_COMMAND(cmd_cb10, 3);
+}
+
+static void cmd_cb8(void *arg) {
+    (void)arg;
+    target_distance = 150;
+    NEXT_COMMAND(cmd_cb9, 3);
+}
+
+static void cmd_cb7(void *arg) {
+    (void)arg;
+    target_orientation = DEGREE_TO_IMU_UNIT(0);
+    eyes_up();
+    NEXT_COMMAND(cmd_cb8, 3);
+}
+
+static void cmd_cb6(void *arg) {
+    (void)arg;
+    emergency_stop_enable = true;
+    target_distance = -300;
+    eyes_down();
+    NEXT_COMMAND(cmd_cb7, 6);
+}
+
+static void cmd_cb5(void *arg) {
+    (void)arg;
+    emergency_stop_enable = false;
+    target_distance = 300;
+    NEXT_COMMAND(cmd_cb6, 6);
+}
+
+static void cmd_cb4(void *arg) {
+    (void)arg;
+    target_distance = 300;
+    NEXT_COMMAND(cmd_cb5, 6);
+}
+
+static void cmd_cb3(void *arg) {
+    (void)arg;
+    if (color == GREEN) {
+        target_orientation = DEGREE_TO_IMU_UNIT(270);
+    } else {
+        target_orientation = DEGREE_TO_IMU_UNIT(90);
+    }
+    arms_position = ARMS_DOWN;
+    NEXT_COMMAND(cmd_cb4, 3);
 }
 
 static void cmd_cb2(void *arg) {
-    target_distance = 550;
-    chSysLockFromISR();
-    chVTResetI(&cmd_clock);
-    chVTSetI(&cmd_clock, S2ST(6), cmd_cb3, NULL);
-    chSysUnlockFromISR();
+    (void)arg;
+    target_distance = 300;
+    NEXT_COMMAND(cmd_cb3, 7);
 }
 
 static void cmd_cb1(void *arg) {
+    (void)arg;
     if (color == GREEN) {
         target_orientation = DEGREE_TO_IMU_UNIT(45);
     } else {
         target_orientation = DEGREE_TO_IMU_UNIT(315);
     }
-    chSysLockFromISR();
-    chVTResetI(&cmd_clock);
-    chVTSetI(&cmd_clock, S2ST(2), cmd_cb2, NULL);
-    chSysUnlockFromISR();
+    arms_position = ARMS_UP;
+    NEXT_COMMAND(cmd_cb2, 2);
 }
 
 int main(void)
@@ -120,6 +163,10 @@ int main(void)
     while(1) {
         chThdSleepMilliseconds(100);
         palTogglePad(GPIOC, GPIOC_DEBUG_LED);
+        if (arms_position != ARMS_NONE) {
+            set_arms(arms_position);
+            arms_position = ARMS_NONE;
+        }
     }
 
     return 1;

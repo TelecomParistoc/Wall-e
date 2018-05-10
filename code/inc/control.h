@@ -17,6 +17,9 @@ extern void init_control(void);
 #define WAIT_TRANSLATION_END while (!translation_ended()) {};
 #define WAIT_ROTATION_ENDED while (!rotation_ended()) {};
 
+#define NEXT_COMMAND(cb, delay) do {chSysLockFromISR(); chVTResetI(&cmd_clock); \
+chVTSetI(&cmd_clock, S2ST(delay), cb, NULL); chSysUnlockFromISR();} while(0)
+
 extern bool translation_ended(void);
 extern bool rotation_ended(void);
 

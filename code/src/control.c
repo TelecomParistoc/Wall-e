@@ -7,7 +7,7 @@
 
 uint16_t target_orientation;
 int32_t target_distance;
-uint8_t linear_command;
+int8_t linear_command;
 static uint16_t cur_orientation = 0;
 volatile bool emergency_stop;
 volatile bool emergency_stop_enable;
@@ -85,8 +85,8 @@ THD_FUNCTION(control_thread, p) {
             angular_pid.d = angular_coeff.d * (delta_orientation - last_delta_orientation);
 
             tmp = (int)(angular_pid.p + angular_pid.i + angular_pid.d);
-            if (ABS(tmp) > MAX_SPEED) {
-                command_angular_correction = SIGN(tmp) * MAX_SPEED;
+            if (ABS(tmp) > MAX_SPEED_ANGULAR) {
+                command_angular_correction = SIGN(tmp) * MAX_SPEED_ANGULAR;
             } else {
                 command_angular_correction = (int8_t)tmp;
             }
@@ -109,14 +109,15 @@ THD_FUNCTION(control_thread, p) {
         if (target_distance != 0) {
             current_distance++;
 
-            linear_command = MIN(DEFAULT_SPEED, MAX_SPEED - ABS(command_angular_correction));
+            linear_command = SIGN(target_distance) * MIN(DEFAULT_SPEED, MAX_SPEED - ABS(command_angular_correction));
 
             printf("current_distance %d target_distance %d\n", current_distance, target_distance);
-            if (current_distance == target_distance) {
+            if (current_distance == ABS(target_distance)) {
                 target_distance = 0;
                 current_distance = 0;
             }
         }
+        printf("linear %d\n", linear_command);
 
         // Set speed
         set_speed(MOTOR_RIGHT, linear_command - command_angular_correction);

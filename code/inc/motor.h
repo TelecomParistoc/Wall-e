@@ -4,6 +4,7 @@
 #include "hal.h"
 
 #define MAX_SPEED 30
+#define MAX_SPEED_ANGULAR 20
 #define DEFAULT_SPEED 25
 
 typedef enum motor_t {
