@@ -19,7 +19,8 @@ void init_arms(void) {
         printf("CW %d, CCW %d\n", ax12Config.CWLimit, ax12Config.CCWLimit);
     }
 
-    set_arms_down();
+    //set_arms_down();
+    set_arms(ARMS_MIDDLE);
 }
 
 void set_arms_down(void) {
@@ -43,8 +44,8 @@ void set_arms(arms_position_t position) {
         extend_arms();
         break;
     case ARMS_MIDDLE:
-        AX12move(ID_LEFT, -95, NULL);
-        AX12move(ID_RIGHT, 5, NULL);
+        AX12move(ID_LEFT, -93, NULL);
+        AX12move(ID_RIGHT, -7, NULL);
         break;
     default:
         break;

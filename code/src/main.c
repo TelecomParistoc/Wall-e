@@ -40,7 +40,7 @@ static void cmd_cb9(void *arg) {
     } else {
         target_orientation = DEGREE_TO_IMU_UNIT(90);
     }
-    NEXT_COMMAND(cmd_cb10, 3);
+    NEXT_COMMAND(cmd_cb10, 4);
 }
 
 static void cmd_cb8(void *arg) {
