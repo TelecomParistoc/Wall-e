@@ -1,10 +1,21 @@
 #include "arms.h"
 #include "ax12driver.h"
 #include "pneumatic.h"
+#include "control.h"
 #include "RTT/SEGGER_RTT.h"
 
 #define ID_LEFT 164
 #define ID_RIGHT 130
+
+static void set_arms_down(void) {
+    AX12move(ID_LEFT, -70, NULL);
+    AX12move(ID_RIGHT, -25, NULL);
+}
+
+static void set_arms_up(void) {
+    AX12move(ID_LEFT, -130, NULL);
+    AX12move(ID_RIGHT, 45, NULL);
+}
 
 void init_arms(void) {
     AX12Config_t ax12Config = {0};
@@ -19,21 +30,14 @@ void init_arms(void) {
         printf("CW %d, CCW %d\n", ax12Config.CWLimit, ax12Config.CCWLimit);
     }
 
-    //set_arms_down();
-    set_arms(ARMS_MIDDLE);
-}
-
-void set_arms_down(void) {
-    AX12move(ID_LEFT, -70, NULL);
-    AX12move(ID_RIGHT, -25, NULL);
-}
-
-void set_arms_up(void) {
-    AX12move(ID_LEFT, -130, NULL);
-    AX12move(ID_RIGHT, 45, NULL);
+    set_arms_down();
 }
 
 void set_arms(arms_position_t position) {
+    if (end_match) {
+        return;
+    }
+
     switch(position) {
     case ARMS_DOWN:
         set_arms_down();
@@ -47,6 +51,9 @@ void set_arms(arms_position_t position) {
         AX12move(ID_LEFT, -93, NULL);
         AX12move(ID_RIGHT, -7, NULL);
         break;
+    case ARMS_BALL:
+        AX12move(ID_LEFT, -110, NULL);
+        AX12move(ID_RIGHT, 10, NULL);
     default:
         break;
     }

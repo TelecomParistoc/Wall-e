@@ -9,6 +9,7 @@ extern int32_t target_distance;
 extern uint8_t command_angular_correction;
 extern volatile bool emergency_stop;
 extern volatile bool emergency_stop_enable;
+extern volatile bool end_match;
 
 extern void init_control(void);
 

@@ -11,6 +11,7 @@ int8_t linear_command;
 static uint16_t cur_orientation = 0;
 volatile bool emergency_stop;
 volatile bool emergency_stop_enable;
+volatile bool end_match = false;
 
 typedef struct pid_s {
     double p;
@@ -27,6 +28,7 @@ pid_t angular_coeff = {0.2, 0.0, 0.0};
 void init_control(void) {
     emergency_stop = true;
     emergency_stop_enable = true;
+    end_match = false;
     target_distance = 0;
     target_orientation = 0;
 }
@@ -65,6 +67,12 @@ THD_FUNCTION(control_thread, p) {
 
             emergency_stop = check_obstacle();
             continue;
+        }
+
+        if (end_match) {
+            set_speed(MOTOR_RIGHT, 0);
+            set_speed(MOTOR_LEFT, 0);
+            return;
         }
 
         // Angular correction

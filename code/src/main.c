@@ -25,6 +25,7 @@ typedef enum {
 color_t color;
 
 static virtual_timer_t cmd_clock;
+//static virtual_timer_t end_match_timer;
 static volatile arms_position_t arms_position = ARMS_NONE;
 
 static void cmd_cb10(void *arg) {
@@ -35,11 +36,7 @@ static void cmd_cb10(void *arg) {
 
 static void cmd_cb9(void *arg) {
     (void)arg;
-    if (color == GREEN) {
-        target_orientation = DEGREE_TO_IMU_UNIT(270);
-    } else {
-        target_orientation = DEGREE_TO_IMU_UNIT(90);
-    }
+    target_orientation = DEGREE_TO_IMU_UNIT(0);
     NEXT_COMMAND(cmd_cb10, 4);
 }
 
@@ -52,14 +49,17 @@ static void cmd_cb8(void *arg) {
 
 static void cmd_cb7(void *arg) {
     (void)arg;
-    target_orientation = DEGREE_TO_IMU_UNIT(0);
+    if (color == GREEN) {
+        target_orientation = DEGREE_TO_IMU_UNIT(270);
+    } else {
+        target_orientation = DEGREE_TO_IMU_UNIT(90);
+    }
     eyes_up();
     NEXT_COMMAND(cmd_cb8, 3);
 }
 
 static void cmd_cb6(void *arg) {
     (void)arg;
-    emergency_stop_enable = true;
     target_distance = -300;
     eyes_down();
     NEXT_COMMAND(cmd_cb7, 6);
@@ -67,7 +67,6 @@ static void cmd_cb6(void *arg) {
 
 static void cmd_cb5(void *arg) {
     (void)arg;
-    emergency_stop_enable = false;
     target_distance = 400;
     NEXT_COMMAND(cmd_cb6, 6);
 }
@@ -80,11 +79,7 @@ static void cmd_cb4(void *arg) {
 
 static void cmd_cb3(void *arg) {
     (void)arg;
-    if (color == GREEN) {
-        target_orientation = DEGREE_TO_IMU_UNIT(270);
-    } else {
-        target_orientation = DEGREE_TO_IMU_UNIT(90);
-    }
+    target_orientation = DEGREE_TO_IMU_UNIT(180);
     arms_position = ARMS_DOWN;
     NEXT_COMMAND(cmd_cb4, 3);
 }
@@ -92,20 +87,27 @@ static void cmd_cb3(void *arg) {
 static void cmd_cb2(void *arg) {
     (void)arg;
     target_distance = 300;
-    NEXT_COMMAND(cmd_cb3, 7);
+    arms_position = ARMS_UP;
+    NEXT_COMMAND(cmd_cb3, 6);
 }
 
 static void cmd_cb1(void *arg) {
     (void)arg;
     if (color == GREEN) {
-        target_orientation = DEGREE_TO_IMU_UNIT(45);
+        target_orientation = DEGREE_TO_IMU_UNIT(270);
     } else {
-        target_orientation = DEGREE_TO_IMU_UNIT(315);
+        target_orientation = DEGREE_TO_IMU_UNIT(90);
     }
-    arms_position = ARMS_UP;
-    NEXT_COMMAND(cmd_cb2, 2);
+
+    NEXT_COMMAND(cmd_cb2, 3);
 }
 
+/*static void end_match_cb(void *arg) {
+    (void)arg;
+    end_match = true;
+    printf("end match\n");
+}
+*/
 int main(void)
 {
     int sign;
@@ -157,10 +159,13 @@ int main(void)
     }
 #endif
     chVTObjectInit(&cmd_clock);
+//    chVTObjectInit(&end_match_timer);
+//    chVTSet(&end_match_timer, S2ST(100), end_match_cb, NULL);
 
-    target_distance = 100;
+    target_distance = 300;
     chVTReset(&cmd_clock);
-    chVTSet(&cmd_clock, S2ST(2), cmd_cb1, NULL);
+    set_arms(ARMS_BALL);
+    chVTSet(&cmd_clock, S2ST(6), cmd_cb1, NULL);
     while(1) {
         chThdSleepMilliseconds(100);
         palTogglePad(GPIOC, GPIOC_DEBUG_LED);

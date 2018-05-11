@@ -50,6 +50,10 @@ const EXTConfig ext_config = {
 };
 
 extern void set_pos(eye_t eye, int8_t pos) {
+    if (end_match) {
+        return;
+    }
+
     switch (eye) {
         case EYE_LEFT:
             TIM15->CCR1 = pos;
