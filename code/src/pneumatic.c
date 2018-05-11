@@ -1,6 +1,8 @@
 #include "pneumatic.h"
 #include "hal.h"
 
+void close_valve(valve_t id);
+
 extern void pneumatic_init(void) {
     stop_pump();
     close_valve(VALVE_2);

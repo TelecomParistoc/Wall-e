@@ -8,12 +8,12 @@
 #define ID_RIGHT 130
 
 static void set_arms_down(void) {
-    AX12move(ID_LEFT, -70, NULL);
+    AX12move(ID_LEFT, -23, NULL);
     AX12move(ID_RIGHT, -25, NULL);
 }
 
 static void set_arms_up(void) {
-    AX12move(ID_LEFT, -130, NULL);
+    AX12move(ID_LEFT, -83, NULL);
     AX12move(ID_RIGHT, 45, NULL);
 }
 
@@ -48,12 +48,12 @@ void set_arms(arms_position_t position) {
         extend_arms();
         break;
     case ARMS_MIDDLE:
-        AX12move(ID_LEFT, -93, NULL);
+        AX12move(ID_LEFT, -46, NULL);
         AX12move(ID_RIGHT, -7, NULL);
         break;
     case ARMS_BALL:
-        AX12move(ID_LEFT, -110, NULL);
-        AX12move(ID_RIGHT, 10, NULL);
+        AX12move(ID_LEFT, -66, NULL);
+        AX12move(ID_RIGHT, 15, NULL);
     default:
         break;
     }

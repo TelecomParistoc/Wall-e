@@ -11,7 +11,7 @@
 #include "arms.h"
 #include "control.h"
 #include "RTT/SEGGER_RTT.h"
-
+#include "ax12driver.h"
 //#define TEST
 
 void cb(void) {
@@ -28,10 +28,23 @@ static virtual_timer_t cmd_clock;
 //static virtual_timer_t end_match_timer;
 static volatile arms_position_t arms_position = ARMS_NONE;
 
+static void cmd_cb12(void *arg) {
+    (void)arg;
+    emergency_stop_enable = true;
+}
+
+static void cmd_cb11(void *arg) {
+    (void)arg;
+    arms_position = ARMS_UP;
+    target_distance = 100;
+    NEXT_COMMAND(cmd_cb12, 2);
+}
+
 static void cmd_cb10(void *arg) {
     (void)arg;
     emergency_stop_enable = false;
-    target_distance = 300;
+    target_distance = -300;
+    NEXT_COMMAND(cmd_cb11, 6);
 }
 
 static void cmd_cb9(void *arg) {
@@ -55,20 +68,20 @@ static void cmd_cb7(void *arg) {
         target_orientation = DEGREE_TO_IMU_UNIT(90);
     }
     eyes_up();
-    NEXT_COMMAND(cmd_cb8, 3);
+    NEXT_COMMAND(cmd_cb8, 5);
 }
 
 static void cmd_cb6(void *arg) {
     (void)arg;
     target_distance = -300;
     eyes_down();
-    NEXT_COMMAND(cmd_cb7, 6);
+    NEXT_COMMAND(cmd_cb7, 7);
 }
 
 static void cmd_cb5(void *arg) {
     (void)arg;
     target_distance = 400;
-    NEXT_COMMAND(cmd_cb6, 6);
+    NEXT_COMMAND(cmd_cb6, 8);
 }
 
 static void cmd_cb4(void *arg) {
@@ -86,7 +99,7 @@ static void cmd_cb3(void *arg) {
 
 static void cmd_cb2(void *arg) {
     (void)arg;
-    target_distance = 300;
+    target_distance = 270;
     arms_position = ARMS_UP;
     NEXT_COMMAND(cmd_cb3, 6);
 }
