@@ -1,5 +1,6 @@
 #include "arms.h"
 #include "ax12driver.h"
+#include "pneumatic.h"
 #include "RTT/SEGGER_RTT.h"
 
 #define ID_LEFT 164
@@ -27,17 +28,23 @@ void set_arms_down(void) {
 }
 
 void set_arms_up(void) {
-    AX12move(ID_LEFT, -120, NULL);
-    AX12move(ID_RIGHT, 35, NULL);
+    AX12move(ID_LEFT, -130, NULL);
+    AX12move(ID_RIGHT, 45, NULL);
 }
 
 void set_arms(arms_position_t position) {
     switch(position) {
     case ARMS_DOWN:
         set_arms_down();
+        retract_arms();
         break;
     case ARMS_UP:
         set_arms_up();
+        extend_arms();
+        break;
+    case ARMS_MIDDLE:
+        AX12move(ID_LEFT, -95, NULL);
+        AX12move(ID_RIGHT, 5, NULL);
         break;
     default:
         break;

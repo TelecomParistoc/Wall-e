@@ -46,6 +46,7 @@ static void cmd_cb9(void *arg) {
 static void cmd_cb8(void *arg) {
     (void)arg;
     target_distance = 150;
+    arms_position = ARMS_MIDDLE;
     NEXT_COMMAND(cmd_cb9, 3);
 }
 
@@ -67,7 +68,7 @@ static void cmd_cb6(void *arg) {
 static void cmd_cb5(void *arg) {
     (void)arg;
     emergency_stop_enable = false;
-    target_distance = 300;
+    target_distance = 400;
     NEXT_COMMAND(cmd_cb6, 6);
 }
 

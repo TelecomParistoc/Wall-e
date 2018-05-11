@@ -4,10 +4,10 @@
 #define VALVE_NB 4
 
 typedef enum valve_t {
-    VALVE_1,
-    VALVE_2,
-    VALVE_3,
-    VALVE_4
+    VALVE_1, // intérieur rouge
+    VALVE_2, //interieur (pompe coude)
+    VALVE_3, // interieur pompe droit
+    VALVE_4 // exterieur
 } valve_t;
 
 extern void pneumatic_init(void);

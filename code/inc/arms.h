@@ -6,6 +6,7 @@
 typedef enum {
     ARMS_UP,
     ARMS_DOWN,
+    ARMS_MIDDLE,
     ARMS_NONE
 } arms_position_t;
 

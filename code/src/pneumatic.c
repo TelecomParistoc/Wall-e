@@ -1,9 +1,6 @@
 #include "pneumatic.h"
 #include "hal.h"
 
-static void open_valve(valve_t id);
-static void close_valve(valve_t id);
-
 extern void pneumatic_init(void) {
     stop_pump();
     close_valve(VALVE_2);
@@ -20,7 +17,7 @@ extern void stop_pump(void) {
     palClearPad(GPIOB, GPIOB_PUMP);
 }
 
-static void open_valve(valve_t id) {
+void open_valve(valve_t id) {
     switch (id) {
         case VALVE_1:
             palSetPad(GPIOB, GPIOB_VALVE_1);
@@ -39,7 +36,7 @@ static void open_valve(valve_t id) {
     }
 }
 
-static void close_valve(valve_t id) {
+void close_valve(valve_t id) {
     switch (id) {
         case VALVE_1:
             palClearPad(GPIOB, GPIOB_VALVE_1);

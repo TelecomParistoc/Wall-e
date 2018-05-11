@@ -70,13 +70,13 @@ static void ext_cb(EXTDriver* driver, expchannel_t channel) {
 }
 
 extern void eyes_up(void) {
-    set_pos(EYE_LEFT, 50);
-    set_pos(EYE_RIGHT, 73);
+    set_pos(EYE_LEFT, 53);
+    set_pos(EYE_RIGHT, 70);
 }
 
 extern void eyes_down(void) {
-    set_pos(EYE_LEFT, 73);
-    set_pos(EYE_RIGHT, 50);
+    set_pos(EYE_LEFT, 76);
+    set_pos(EYE_RIGHT, 47);
 }
 
 extern bool check_obstacle(void) {
