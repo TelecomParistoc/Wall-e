@@ -25,7 +25,7 @@ typedef enum {
 color_t color;
 
 static virtual_timer_t cmd_clock;
-//static virtual_timer_t end_match_timer;
+static virtual_timer_t end_match_timer;
 static volatile arms_position_t arms_position = ARMS_NONE;
 
 static void cmd_cb12(void *arg) {
@@ -43,8 +43,8 @@ static void cmd_cb11(void *arg) {
 static void cmd_cb10(void *arg) {
     (void)arg;
     emergency_stop_enable = false;
-    target_distance = -300;
-    NEXT_COMMAND(cmd_cb11, 6);
+    target_distance = -800;
+    NEXT_COMMAND(cmd_cb11, 16);
 }
 
 static void cmd_cb9(void *arg) {
@@ -115,12 +115,12 @@ static void cmd_cb1(void *arg) {
     NEXT_COMMAND(cmd_cb2, 3);
 }
 
-/*static void end_match_cb(void *arg) {
+static void end_match_cb(void *arg) {
     (void)arg;
     end_match = true;
     printf("end match\n");
 }
-*/
+
 int main(void)
 {
     int sign;
@@ -172,8 +172,8 @@ int main(void)
     }
 #endif
     chVTObjectInit(&cmd_clock);
-//    chVTObjectInit(&end_match_timer);
-//    chVTSet(&end_match_timer, S2ST(100), end_match_cb, NULL);
+    chVTObjectInit(&end_match_timer);
+    chVTSet(&end_match_timer, S2ST(100), end_match_cb, NULL);
 
     target_distance = 300;
     chVTReset(&cmd_clock);

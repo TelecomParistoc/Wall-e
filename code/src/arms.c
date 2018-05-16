@@ -52,8 +52,8 @@ void set_arms(arms_position_t position) {
         AX12move(ID_RIGHT, -7, NULL);
         break;
     case ARMS_BALL:
-        AX12move(ID_LEFT, -66, NULL);
-        AX12move(ID_RIGHT, 15, NULL);
+        AX12move(ID_LEFT, -63, NULL);
+        AX12move(ID_RIGHT, 17, NULL);
     default:
         break;
     }
