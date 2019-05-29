@@ -28,91 +28,86 @@ static virtual_timer_t cmd_clock;
 static virtual_timer_t end_match_timer;
 static volatile arms_position_t arms_position = ARMS_NONE;
 
-static void cmd_cb12(void *arg) {
-    (void)arg;
-    emergency_stop_enable = true;
-}
-
-static void cmd_cb11(void *arg) {
-    (void)arg;
-    arms_position = ARMS_UP;
-    target_distance = 100;
-    NEXT_COMMAND(cmd_cb12, 2);
-}
-
-static void cmd_cb10(void *arg) {
-    (void)arg;
-    emergency_stop_enable = false;
-    target_distance = -800;
-    NEXT_COMMAND(cmd_cb11, 16);
-}
-
-static void cmd_cb9(void *arg) {
-    (void)arg;
-    target_orientation = DEGREE_TO_IMU_UNIT(0);
-    NEXT_COMMAND(cmd_cb10, 4);
-}
-
-static void cmd_cb8(void *arg) {
-    (void)arg;
-    target_distance = 150;
-    arms_position = ARMS_MIDDLE;
-    NEXT_COMMAND(cmd_cb9, 3);
-}
-
-static void cmd_cb7(void *arg) {
-    (void)arg;
-    if (color == GREEN) {
-        target_orientation = DEGREE_TO_IMU_UNIT(270);
-    } else {
-        target_orientation = DEGREE_TO_IMU_UNIT(90);
-    }
-    eyes_up();
-    NEXT_COMMAND(cmd_cb8, 5);
-}
-
-static void cmd_cb6(void *arg) {
-    (void)arg;
-    target_distance = -300;
-    eyes_down();
-    NEXT_COMMAND(cmd_cb7, 7);
-}
-
-static void cmd_cb5(void *arg) {
-    (void)arg;
-    target_distance = 400;
-    NEXT_COMMAND(cmd_cb6, 8);
-}
-
-static void cmd_cb4(void *arg) {
-    (void)arg;
-    target_distance = 300;
-    NEXT_COMMAND(cmd_cb5, 6);
-}
-
-static void cmd_cb3(void *arg) {
-    (void)arg;
-    target_orientation = DEGREE_TO_IMU_UNIT(180);
-    arms_position = ARMS_DOWN;
-    NEXT_COMMAND(cmd_cb4, 3);
-}
-
-static void cmd_cb2(void *arg) {
-    (void)arg;
-    target_distance = 270;
-    arms_position = ARMS_UP;
-    NEXT_COMMAND(cmd_cb3, 6);
-}
+// static void cmd_cb12(void *arg) {
+//     (void)arg;
+//     emergency_stop_enable = true;
+// }
+//
+// static void cmd_cb11(void *arg) {
+//     (void)arg;
+//     arms_position = ARMS_UP;
+//     target_distance = 100;
+//     NEXT_COMMAND(cmd_cb12, 2);
+// }
+//
+// static void cmd_cb10(void *arg) {
+//     (void)arg;
+//     emergency_stop_enable = false;
+//     target_distance = -800;
+//     NEXT_COMMAND(cmd_cb11, 16);
+// }
+//
+// static void cmd_cb9(void *arg) {
+//     (void)arg;
+//     target_orientation = DEGREE_TO_IMU_UNIT(0);
+//     NEXT_COMMAND(cmd_cb10, 4);
+// }
+//
+// static void cmd_cb8(void *arg) {
+//     (void)arg;
+//     target_distance = 150;
+//     arms_position = ARMS_MIDDLE;
+//     NEXT_COMMAND(cmd_cb9, 3);
+// }
+//
+// static void cmd_cb7(void *arg) {
+//     (void)arg;
+//     if (color == GREEN) {
+//         target_orientation = DEGREE_TO_IMU_UNIT(270);
+//     } else {
+//         target_orientation = DEGREE_TO_IMU_UNIT(90);
+//     }
+//     eyes_up();
+//     NEXT_COMMAND(cmd_cb8, 5);
+// }
+//
+// static void cmd_cb6(void *arg) {
+//     (void)arg;
+//     target_distance = -300;
+//     eyes_down();
+//     NEXT_COMMAND(cmd_cb7, 7);
+// }
+//
+// static void cmd_cb5(void *arg) {
+//     (void)arg;
+//     target_distance = 400;
+//     NEXT_COMMAND(cmd_cb6, 8);
+// }
+//
+// static void cmd_cb4(void *arg) {
+//     (void)arg;
+//     target_distance = 300;
+//     NEXT_COMMAND(cmd_cb5, 6);
+// }
+//
+// static void cmd_cb3(void *arg) {
+//     (void)arg;
+//     target_orientation = DEGREE_TO_IMU_UNIT(180);
+//     arms_position = ARMS_DOWN;
+//     NEXT_COMMAND(cmd_cb4, 3);
+// }
+//
+// static void cmd_cb2(void *arg) {
+//     (void)arg;
+//     target_distance = 270;
+//     arms_position = ARMS_UP;
+//     NEXT_COMMAND(cmd_cb3, 6);
+// }
 
 static void cmd_cb1(void *arg) {
     (void)arg;
-    if (color == GREEN) {
-        target_orientation = DEGREE_TO_IMU_UNIT(270);
-    } else {
-        target_orientation = DEGREE_TO_IMU_UNIT(90);
-    }
-
-    NEXT_COMMAND(cmd_cb2, 3);
+    target_distance = -300;
+    emergency_stop_enable = false;
 }
 
 static void end_match_cb(void *arg) {
@@ -175,7 +170,7 @@ int main(void)
     chVTObjectInit(&end_match_timer);
     chVTSet(&end_match_timer, S2ST(100), end_match_cb, NULL);
 
-    target_distance = 300;
+    target_distance = -300;
     chVTReset(&cmd_clock);
     set_arms(ARMS_BALL);
     chVTSet(&cmd_clock, S2ST(6), cmd_cb1, NULL);
