@@ -106,7 +106,7 @@ static volatile arms_position_t arms_position = ARMS_NONE;
 
 static void cmd_cb1(void *arg) {
     (void)arg;
-    target_distance = -300;
+    next_target_distance = -300;
     emergency_stop_enable = false;
 }
 
@@ -170,7 +170,7 @@ int main(void)
     chVTObjectInit(&end_match_timer);
     chVTSet(&end_match_timer, S2ST(100), end_match_cb, NULL);
 
-    target_distance = -300;
+    next_target_distance = -300;
     chVTReset(&cmd_clock);
     set_arms(ARMS_BALL);
     chVTSet(&cmd_clock, S2ST(6), cmd_cb1, NULL);

@@ -6,6 +6,7 @@
 
 extern uint16_t target_orientation;
 extern int32_t target_distance;
+extern int32_t next_target_distance;
 extern uint8_t command_angular_correction;
 extern volatile bool emergency_stop;
 extern volatile bool emergency_stop_enable;
