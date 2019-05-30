@@ -16,7 +16,7 @@ volatile int movementIndex = 0;
 Movement_t movements[] = {
     {0, 0, 0, true, true},
     {-125, 0, ARMS_UP, true, true},
-    {-180, 0, ARMS_MIDDLE, false, true},
+    {-300, 0, ARMS_MIDDLE, false, true},
     {0, 0, 0, true, false}
 };
 
