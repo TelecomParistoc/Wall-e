@@ -13,8 +13,8 @@ static void set_arms_down(void) {
 }
 
 static void set_arms_up(void) {
-    AX12move(ID_LEFT, -83, NULL);
-    AX12move(ID_RIGHT, 45, NULL);
+    AX12move(ID_LEFT, -80, NULL);
+    AX12move(ID_RIGHT, 42, NULL);
 }
 
 void init_arms(void) {
