@@ -12,6 +12,7 @@
 #include "control.h"
 #include "RTT/SEGGER_RTT.h"
 #include "ax12driver.h"
+#include "move.h"
 //#define TEST
 
 void cb(void) {
@@ -24,9 +25,7 @@ typedef enum {
 } color_t;
 color_t color;
 
-static virtual_timer_t cmd_clock;
 static virtual_timer_t end_match_timer;
-static volatile arms_position_t arms_position = ARMS_NONE;
 
 // static void cmd_cb12(void *arg) {
 //     (void)arg;
@@ -104,11 +103,12 @@ static volatile arms_position_t arms_position = ARMS_NONE;
 //     NEXT_COMMAND(cmd_cb3, 6);
 // }
 
-static void cmd_cb1(void *arg) {
-    (void)arg;
-    next_target_distance = -300;
-    emergency_stop_enable = false;
-}
+// static void cmd_cb1(void *arg) {
+//     (void)arg;
+//     next_target_distance = -180;
+//     emergency_stop_enable = false;
+//     arms_position = ARMS_BALL;
+// }
 
 static void end_match_cb(void *arg) {
     (void)arg;
@@ -118,7 +118,8 @@ static void end_match_cb(void *arg) {
 
 int main(void)
 {
-    int sign;
+    arms_position_t current_arm_pos = ARMS_NONE;
+    int sign = 1;
     halInit();
     chSysInit();
 
@@ -157,29 +158,34 @@ int main(void)
     extStart(&EXTD1, &ext_config);
 
     chThdCreateStatic(wa_control, sizeof(wa_control), NORMALPRIO + 1, control_thread, NULL);
-    sign = 0;
 
     // Starting "jack"
+    set_arms(ARMS_UP);
 #ifndef TEST
     while (check_obstacle()) {
         chThdSleepMilliseconds(100);
         palTogglePad(GPIOC, GPIOC_DEBUG_LED);
     }
 #endif
-    chVTObjectInit(&cmd_clock);
     chVTObjectInit(&end_match_timer);
     chVTSet(&end_match_timer, S2ST(100), end_match_cb, NULL);
 
-    next_target_distance = -300;
-    chVTReset(&cmd_clock);
-    set_arms(ARMS_BALL);
-    chVTSet(&cmd_clock, S2ST(6), cmd_cb1, NULL);
     while(1) {
         chThdSleepMilliseconds(100);
         palTogglePad(GPIOC, GPIOC_DEBUG_LED);
-        if (arms_position != ARMS_NONE) {
-            set_arms(arms_position);
-            arms_position = ARMS_NONE;
+        if (translation_ended() && rotation_ended()) {
+            if (movements[movementIndex].valid) {
+                movementIndex++;
+            }
+            if (movements[movementIndex].valid) {
+                target_distance = movements[movementIndex].target_distance;
+                target_orientation = sign * movements[movementIndex].target_orientation;
+                emergency_stop_enable = movements[movementIndex].emergency_stop_enable;
+            }
+        }
+        if (movements[movementIndex].arms_pos != current_arm_pos) {
+            current_arm_pos = movements[movementIndex].arms_pos;
+            set_arms(current_arm_pos);
         }
     }
 

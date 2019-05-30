@@ -1,12 +1,23 @@
 #ifndef MOVE_H
 #define MOVE_H
 
-#include "hal.h"
+#include "arms.h"
 
-#define USE_IMU 0
+typedef struct {
+    int target_distance;
+    int target_orientation;
+    arms_position_t arms_pos;
+    bool emergency_stop_enable;
+    bool valid;
+} Movement_t;
 
-void move_forward(uint32_t time);
+volatile int movementIndex = 0;
 
-void turn (int16_t angle);
+Movement_t movements[] = {
+    {0, 0, 0, true, true},
+    {-125, 0, ARMS_UP, true, true},
+    {-180, 0, ARMS_MIDDLE, false, true},
+    {0, 0, 0, true, false}
+};
 
 #endif /* MOVE_H */

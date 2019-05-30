@@ -7,7 +7,6 @@
 
 uint16_t target_orientation;
 int32_t target_distance;
-int32_t next_target_distance;
 int8_t linear_command;
 static uint16_t cur_orientation = 0;
 volatile bool emergency_stop;
@@ -31,7 +30,6 @@ void init_control(void) {
     emergency_stop_enable = true;
     end_match = false;
     target_distance = 0;
-    next_target_distance = 0;
     target_orientation = 0;
 }
 
@@ -40,7 +38,11 @@ bool translation_ended(void) {
 }
 
 bool rotation_ended(void) {
-    return (ABS(target_orientation - cur_orientation) < ANGULAR_ALLOWANCE);
+    int delta_orientation = ABS(target_orientation - cur_orientation);
+    if (delta_orientation > MAX_RANGE / 2) {
+        delta_orientation = MAX_RANGE - delta_orientation;
+    }
+    return (delta_orientation < ANGULAR_ALLOWANCE);
 }
 
 THD_WORKING_AREA(wa_control, 2048);
@@ -126,9 +128,6 @@ THD_FUNCTION(control_thread, p) {
                 target_distance = 0;
                 current_distance = 0;
             }
-        } else if (next_target_distance != 0) {
-            target_distance = next_target_distance;
-            next_target_distance = 0;
         }
         printf("linear %d\n", linear_command);
 
